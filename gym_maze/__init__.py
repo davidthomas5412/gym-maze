@@ -80,3 +80,9 @@ register(
     timestep_limit=1000000,
     nondeterministic=True,
 )
+
+register(
+    id='milestone-maze-v0',
+    entry_point='gym_maze.envs:MilestoneMaze',
+    timestep_limit=1000000
+)

@@ -20,7 +20,7 @@ class MazeEnv(gym.Env):
         if maze_file:
             self.maze_view = MazeView2D(maze_name="OpenAI Gym - Maze (%s)" % maze_file,
                                         maze_file_path=maze_file,
-                                        screen_size=(640, 640))
+                                        screen_size=(640, 640), has_loops=True, num_portals=3)
         elif maze_size:
             if mode == "plus":
                 has_loops = True
@@ -165,3 +165,7 @@ class MazeEnvRandom20x20Plus(MazeEnv):
 class MazeEnvRandom30x30Plus(MazeEnv):
     def __init__(self):
         super(MazeEnvRandom30x30Plus, self).__init__(maze_size=(30, 30), mode="plus")
+
+class MilestoneMaze(MazeEnv):
+    def __init__(self):
+        super(MilestoneMaze, self).__init__(maze_file='milestone_maze.npy', mode='plus')
