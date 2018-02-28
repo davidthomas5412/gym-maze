@@ -286,7 +286,7 @@ class Maze:
                 self.maze_size = tuple(maze_cells.shape)
             else:
                 raise ValueError("maze_cells must be a 2D NumPy array.")
-            self.__set_portals(num_portals)
+            self.__set_portals()
         # Otherwise, generate a random one
         else:
             # maze's configuration parameters
@@ -372,30 +372,10 @@ class Maze:
         if self.num_portals > 0:
             self.__set_random_portals(num_portal_sets=self.num_portals, set_size=2)
 
-    def __set_portals(self, num_portals, seed=1):
-        num_portal_sets = int(num_portals)
-        set_size = 2
+    def __set_portals(self):
+        cell_ids = [48, 63, 9, 61, 43, 35]
 
-        # limit the maximum number of portal sets to the number of cells available.
-        max_portal_sets = int(self.MAZE_W * self.MAZE_H / set_size)
-        num_portal_sets = min(max_portal_sets, num_portal_sets)
-
-        # the first and last cells are reserved
-        np.random.seed(seed)
-        cell_ids = random.sample(range(1, self.MAZE_W * self.MAZE_H - 1), num_portal_sets*set_size)
-
-        for i in range(num_portal_sets):
-            # sample the set_size number of sell
-            portal_cell_ids = random.sample(cell_ids, set_size)
-            portal_locations = []
-            for portal_cell_id in portal_cell_ids:
-                # remove the cell from the set of potential cell_ids
-                cell_ids.pop(cell_ids.index(portal_cell_id))
-                # convert portal ids to location
-                x = portal_cell_id % self.MAZE_H
-                y = int(portal_cell_id / self.MAZE_H)
-                portal_locations.append((x,y))
-            # append the new portal to the maze
+        for portal_locations in [[(3, 4), (5, 3)], [(8, 4), (3, 6)], [(1, 6), (9, 0)]]:
             portal = Portal(*portal_locations)
             self.__portals.append(portal)
 
