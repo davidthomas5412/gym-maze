@@ -8,7 +8,7 @@ class MazeView2D:
 
     def __init__(self, maze_name="Maze2D", maze_file_path=None,
                  maze_size=(30, 30), screen_size=(600, 600),
-                 has_loops=False, num_portals=0):
+                 has_loops=False, num_portals=3):
 
         # PyGame configurations
         pygame.init()
@@ -18,7 +18,13 @@ class MazeView2D:
 
         # Load a maze
         if maze_file_path is None:
-            self.__maze = Maze(maze_size=maze_size, has_loops=has_loops, num_portals=num_portals)
+            self.__entrance = np.array((np.random.randint(maze_size[0]),
+                np.random.randint(maze_size[1])))
+            self.__goal = np.array((np.random.randint(maze_size[0]),
+                np.random.randint(maze_size[1])))
+
+            self.__maze = Maze(maze_size=maze_size, has_loops=has_loops, num_portals=num_portals,
+                entrance=self.__entrance, goal=self.__goal)
         else:
             if not os.path.exists(maze_file_path):
                 dir_path = os.path.dirname(os.path.abspath(__file__))
@@ -27,20 +33,22 @@ class MazeView2D:
                     maze_file_path = rel_path
                 else:
                     raise FileExistsError("Cannot find %s." % maze_file_path)
-            self.__maze = Maze(maze_cells=Maze.load_maze(maze_file_path), has_loops=has_loops, num_portals=num_portals)
+            cells = Maze.load_maze(maze_file_path)
+            maze_size = cells.shape
+            self.__entrance = np.array((np.random.randint(maze_size[0]),
+                np.random.randint(maze_size[1])))
+            self.__goal = np.array((np.random.randint(maze_size[0]),
+                np.random.randint(maze_size[1])))
+
+            self.__maze = Maze(maze_cells=cells, has_loops=has_loops, num_portals=num_portals,
+                entrance=self.__entrance, goal=self.__goal)
 
         self.maze_size = self.__maze.maze_size
         # to show the right and bottom border
         self.screen = pygame.display.set_mode(screen_size)
         self.__screen_size = tuple(map(sum, zip(screen_size, (-1, -1))))
 
-        # Set the starting point
-        self.__entrance = np.array((np.random.randint(self.maze_size[0]),
-            np.random.randint(self.maze_size[1])))
 
-        # Set the Goal
-        self.__goal = np.array((np.random.randint(self.maze_size[0]),
-            np.random.randint(self.maze_size[1])))
         while np.array_equal(self.__entrance, self.__goal):
             self.__goal = np.array((np.random.randint(self.maze_size[0]),
                 np.random.randint(self.maze_size[1])))
@@ -312,7 +320,7 @@ class Maze:
         "W": (-1, 0)
     }
 
-    def __init__(self, maze_cells=None, maze_size=(10,10), has_loops=True, num_portals=0):
+    def __init__(self, maze_cells=None, maze_size=(10,10), has_loops=True, num_portals=0, entrance=(0,0), goal=(9,9)):
 
         # maze member variables
         self.maze_cells = maze_cells
@@ -320,6 +328,8 @@ class Maze:
         self.__portals_dict = dict()
         self.__portals = []
         self.num_portals = num_portals
+        self.goal = goal
+        self.entrance = entrance
 
         # Use existing one if exists
         if self.maze_cells is not None:
@@ -443,6 +453,7 @@ class Maze:
                     break
 
     def __set_random_portals(self, num_portal_sets):
+        taken_locations = set()
         for i in range(num_portal_sets):
             portal_locations = []
             while len(portal_locations) < 2:
@@ -450,8 +461,9 @@ class Maze:
                 y = np.random.randint(self.maze_size[1])
                 isgoal = (x == self.goal[0]) and (y == self.goal[1])
                 isentrance = (x == self.entrance[0]) and (y == self.entrance[1])
-                if not isgoal and not isentrance:
+                if not in taken_locations and not isgoal and not isentrance:
                     portal_locations.append((x,y))
+                    taken_locations.add((x,y))
             # append the new portal to the maze
             portal = Portal(*portal_locations)
             self.__portals.append(portal)
