@@ -66,6 +66,11 @@ class MazeView2D:
         # show the goal
         self.__draw_goal()
 
+        # this is where the state is initialized
+        self.reset_robot()
+
+
+
     def update(self, mode="human"):
         try:
             img_output = self.__view_update(mode)
@@ -90,6 +95,8 @@ class MazeView2D:
             raise ValueError("dir cannot be %s. The only valid dirs are %s."
                              % (str(dir), str(self.__maze.COMPASS.keys())))
 
+        self.__state[self.__robot[0], self.__robot[1],0] = 0 # robotmap
+
         if self.__maze.is_open(self.__robot, dir):
 
             # update the drawing
@@ -97,12 +104,37 @@ class MazeView2D:
 
             # move the robot
             self.__robot += np.array(self.__maze.COMPASS[dir])
+
             # if it's in a portal afterward
             if self.maze.is_portal(self.robot):
                 self.__robot = np.array(self.maze.get_portal(tuple(self.robot)).teleport(tuple(self.robot)))
             self.__draw_robot(transparency=255)
 
+        self.__state[self.__robot[0], self.__robot[1], 0] = 1 # robotmap
+        self.__state[self.__robot[0], self.__robot[1], 1] = 1 # visitedmap
+
     def reset_robot(self):
+        # Added for DQN
+        shape = self.__maze.maze_cells.shape
+        robotmap = np.zeros(shape) # gets updated every step
+        visitedmap = np.zeros(shape) # gets updated on steps
+        robotmap[0,0] = 1
+        visitedmap[0,0] = 1
+        mazemap = np.zeros(shape + (4,)) # only need to make once
+        for x in range(shape[0]):
+            for y in range(shape[1]):
+                for d,v in {'N':0,'E':1,'S':2,'W':3}.items():
+                    xprime = x + self.__maze.COMPASS[d][0]
+                    yprime = y + self.__maze.COMPASS[d][1]
+                    mazemap[x,y,v] = self.__maze.is_open((x,y), d) and self.__maze.is_within_bound(xprime, yprime)
+
+        portalmap = np.zeros(shape + (3,))
+        for i,portal in enumerate(self.maze.portals):
+            for location in portal.locations:
+                x,y = location
+                portalmap[x,y,i] = 1
+
+        self.__state = np.dstack((robotmap, visitedmap, mazemap, portalmap))
 
         self.__draw_robot(transparency=0)
         self.__robot = np.zeros(2, dtype=int)
@@ -140,12 +172,12 @@ class MazeView2D:
         # drawing the horizontal lines
         for y in range(self.maze.MAZE_H + 1):
             pygame.draw.line(self.maze_layer, line_colour, (0, y * self.CELL_H),
-                             (self.SCREEN_W, y * self.CELL_H))
+                             (self.SCREEN_W, y * self.CELL_H), 2)
 
         # drawing the vertical lines
         for x in range(self.maze.MAZE_W + 1):
             pygame.draw.line(self.maze_layer, line_colour, (x * self.CELL_W, 0),
-                             (x * self.CELL_W, self.SCREEN_H))
+                             (x * self.CELL_W, self.SCREEN_H), 2)
 
         # breaking the walls
         for x in range(len(self.maze.maze_cells)):
@@ -182,7 +214,7 @@ class MazeView2D:
             else:
                 raise ValueError("The only valid directions are (N, S, E, W).")
 
-            pygame.draw.line(self.maze_layer, colour, line_head, line_tail)
+            pygame.draw.line(self.maze_layer, colour, line_head, line_tail, 2)
 
     def __draw_robot(self, colour=(0, 0, 150), transparency=255):
 
@@ -220,6 +252,10 @@ class MazeView2D:
         w = int(self.CELL_W + 0.5 - 1)
         h = int(self.CELL_H + 0.5 - 1)
         pygame.draw.rect(self.maze_layer, colour + (transparency,), (x, y, w, h))
+
+    @property
+    def state(self):
+        return self.__state
 
     @property
     def maze(self):
