@@ -35,13 +35,18 @@ class MazeView2D:
         self.__screen_size = tuple(map(sum, zip(screen_size, (-1, -1))))
 
         # Set the starting point
-        self.__entrance = np.zeros(2, dtype=int)
+        self.__entrance = np.array((np.random.randint(self.maze_size[0]),
+            np.random.randint(self.maze_size[1])))
 
         # Set the Goal
-        self.__goal = np.array(self.maze_size) - np.array((1, 1))
+        self.__goal = np.array((np.random.randint(self.maze_size[0]),
+            np.random.randint(self.maze_size[1])))
+        while np.array_equal(self.__entrance, self.__goal):
+            self.__goal = np.array((np.random.randint(self.maze_size[0]),
+                np.random.randint(self.maze_size[1])))
 
         # Create the Robot
-        self.__robot = self.entrance
+        self.__robot = np.copy(self.entrance)
 
         # Create a background
         self.background = pygame.Surface(self.screen.get_size()).convert()
@@ -115,11 +120,11 @@ class MazeView2D:
 
     def reset_robot(self):
         # Added for DQN
-        shape = self.__maze.maze_cells.shape
+        shape = self.__maze.maze_size
         robotmap = np.zeros(shape) # gets updated every step
         visitedmap = np.zeros(shape) # gets updated on steps
-        robotmap[0,0] = 1
-        visitedmap[0,0] = 1
+        robotmap[self.entrance[0], self.entrance[1]] = 1
+        visitedmap[self.entrance[0], self.entrance[1]] = 1
         mazemap = np.zeros(shape + (4,)) # only need to make once
         for x in range(shape[0]):
             for y in range(shape[1]):
@@ -137,7 +142,7 @@ class MazeView2D:
         self.__state = np.dstack((robotmap, visitedmap, mazemap, portalmap))
 
         self.__draw_robot(transparency=0)
-        self.__robot = np.zeros(2, dtype=int)
+        self.__robot = np.copy(self.entrance)
         self.__draw_robot(transparency=255)
 
     def __controller_update(self):
@@ -406,7 +411,7 @@ class Maze:
             self.__break_random_walls(0.2)
 
         if self.num_portals > 0:
-            self.__set_random_portals(num_portal_sets=self.num_portals, set_size=2)
+            self.__set_random_portals(num_portal_sets=self.num_portals)
 
     def __set_portals(self):
         cell_ids = [48, 63, 9, 61, 43, 35]
@@ -437,29 +442,16 @@ class Maze:
                     self.maze_cells[x, y] = self.__break_walls(self.maze_cells[x, y], dir)
                     break
 
-    def __set_random_portals(self, num_portal_sets, set_size=2):
-        # find some random cells to break
-        num_portal_sets = int(num_portal_sets)
-        set_size = int(set_size)
-
-        # limit the maximum number of portal sets to the number of cells available.
-        max_portal_sets = int(self.MAZE_W * self.MAZE_H / set_size)
-        num_portal_sets = min(max_portal_sets, num_portal_sets)
-
-        # the first and last cells are reserved
-        cell_ids = random.sample(range(1, self.MAZE_W * self.MAZE_H - 1), num_portal_sets*set_size)
-
+    def __set_random_portals(self, num_portal_sets):
         for i in range(num_portal_sets):
-            # sample the set_size number of sell
-            portal_cell_ids = random.sample(cell_ids, set_size)
             portal_locations = []
-            for portal_cell_id in portal_cell_ids:
-                # remove the cell from the set of potential cell_ids
-                cell_ids.pop(cell_ids.index(portal_cell_id))
-                # convert portal ids to location
-                x = portal_cell_id % self.MAZE_H
-                y = int(portal_cell_id / self.MAZE_H)
-                portal_locations.append((x,y))
+            while len(portal_locations) < 2:
+                x = np.random.randint(self.maze_size[0])
+                y = np.random.randint(self.maze_size[1])
+                isgoal = (x == self.goal[0]) and (y == self.goal[1])
+                isentrance = (x == self.entrance[0]) and (y == self.entrance[1])
+                if not isgoal and not isentrance:
+                    portal_locations.append((x,y))
             # append the new portal to the maze
             portal = Portal(*portal_locations)
             self.__portals.append(portal)
