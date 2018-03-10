@@ -459,9 +459,9 @@ class Maze:
             while len(portal_locations) < 2:
                 x = np.random.randint(self.maze_size[0])
                 y = np.random.randint(self.maze_size[1])
-                isgoal = (x == self.goal[0]) and (y == self.goal[1])
-                isentrance = (x == self.entrance[0]) and (y == self.entrance[1])
-                if not in taken_locations and not isgoal and not isentrance:
+                is_goal = (x == self.goal[0]) and (y == self.goal[1])
+                is_entrance = (x == self.entrance[0]) and (y == self.entrance[1])
+                if (x,y) not in taken_locations and not is_goal and not is_entrance:
                     portal_locations.append((x,y))
                     taken_locations.add((x,y))
             # append the new portal to the maze
