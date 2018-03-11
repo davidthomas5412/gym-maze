@@ -108,7 +108,9 @@ class MazeView2D:
             raise ValueError("dir cannot be %s. The only valid dirs are %s."
                              % (str(dir), str(self.__maze.COMPASS.keys())))
 
-        self.__state[self.__robot[0], self.__robot[1],0] = 0 # robotmap
+        # self.__state[self.__robot[0], self.__robot[1],0] = 0 # robotmap
+        self.__state[self.__robot[0], self.__robot[1]] = 0 # robotmap
+
 
         if self.__maze.is_open(self.__robot, dir):
 
@@ -123,8 +125,10 @@ class MazeView2D:
                 self.__robot = np.array(self.maze.get_portal(tuple(self.robot)).teleport(tuple(self.robot)))
             self.__draw_robot(transparency=255)
 
-        self.__state[self.__robot[0], self.__robot[1], 0] = 1 # robotmap
-        self.__state[self.__robot[0], self.__robot[1], 1] = 1 # visitedmap
+        self.__state[self.__robot[0], self.__robot[1]] = 1# robotmap
+
+        # self.__state[self.__robot[0], self.__robot[1], 0] = 1 # robotmap
+        # self.__state[self.__robot[0], self.__robot[1], 1] = 1 # visitedmap
 
     def reset_robot(self):
         # Added for DQN
@@ -147,7 +151,7 @@ class MazeView2D:
                 x,y = location
                 portalmap[x,y,i] = 1
 
-        self.__state = np.dstack((robotmap, visitedmap, mazemap, portalmap))
+        self.__state = robotmap #np.dstack((robotmap, visitedmap, mazemap, portalmap))
 
         self.__draw_robot(transparency=0)
         self.__robot = np.copy(self.entrance)
