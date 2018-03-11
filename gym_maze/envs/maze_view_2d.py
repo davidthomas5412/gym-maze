@@ -22,26 +22,56 @@ class MazeView2D:
                 np.random.randint(maze_size[1])))
             self.__goal = np.array((np.random.randint(maze_size[0]),
                 np.random.randint(maze_size[1])))
+            while np.array_equal(self.__entrance, self.__goal):
+                self.__goal = np.array((np.random.randint(maze_size[0]),
+                np.random.randint(maze_size[1])))
 
             self.__maze = Maze(maze_size=maze_size, has_loops=has_loops, num_portals=num_portals,
                 entrance=self.__entrance, goal=self.__goal)
         else:
-            if not os.path.exists(maze_file_path):
-                dir_path = os.path.dirname(os.path.abspath(__file__))
-                rel_path = os.path.join(dir_path, "maze_samples", maze_file_path)
-                if os.path.exists(rel_path):
-                    maze_file_path = rel_path
-                else:
-                    raise FileExistsError("Cannot find %s." % maze_file_path)
-            cells = Maze.load_maze(maze_file_path)
-            maze_size = cells.shape
-            self.__entrance = np.array((np.random.randint(maze_size[0]),
-                np.random.randint(maze_size[1])))
-            self.__goal = np.array((np.random.randint(maze_size[0]),
-                np.random.randint(maze_size[1])))
+            if 'milestone-maze' in maze_file_path:
+                if not os.path.exists(maze_file_path):
+                    dir_path = os.path.dirname(os.path.abspath(__file__))
+                    rel_path = os.path.join(dir_path, "maze_samples", maze_file_path)
+                    if os.path.exists(rel_path):
+                        maze_file_path = rel_path
+                    else:
+                        raise RuntimeError("Cannot find %s." % maze_file_path)
+                cells = Maze.load_maze(maze_file_path)
+                maze_size = cells.shape
+                self.__entrance = np.array((np.random.randint(maze_size[0]),
+                    np.random.randint(maze_size[1])))
+    
+                self.__goal = np.array((np.random.randint(maze_size[0]),
+                    np.random.randint(maze_size[1])))
+    
+                self.__maze = Maze(maze_cells=cells, has_loops=has_loops, num_portals=num_portals,
+                    entrance=self.__entrance, goal=self.__goal)
+            else:
+                if not os.path.exists(maze_file_path):
+                    dir_path = os.path.dirname(os.path.abspath(__file__))
+                    rel_path = os.path.join(dir_path, "maze_samples", maze_file_path)
+                    print(rel_path)
+                    if os.path.exists(rel_path):
+                        maze_file_path = rel_path
+                    else:
+                        raise RuntimeError("Cannot find %s." % maze_file_path)
+                stack = Maze.load_maze(maze_file_path)
+                cells = stack[:,:,0]
+                entrancemap = stack[:,:,1]
+                goalmap = stack[:,:,2]
+                portalmaps = stack[:,:,3:] # we assume three portals
 
-            self.__maze = Maze(maze_cells=cells, has_loops=has_loops, num_portals=num_portals,
-                entrance=self.__entrance, goal=self.__goal)
+                portal_locations = []
+                for i in range(portalmaps.shape[2]):
+                    portal_locations.append(np.squeeze(np.where(portalmaps[:,:,i] == 1)).T)
+
+                self.__entrance = np.squeeze(np.where(entrancemap == 1))
+                self.__goal = np.squeeze(np.where(goalmap == 1))
+
+                maze_size = cells.shape
+                self.__maze = Maze(maze_cells=cells, has_loops=has_loops, num_portals=num_portals,
+                    entrance=self.__entrance, goal=self.__goal, portal_locations=portal_locations)
 
         self.maze_size = self.__maze.maze_size
         # to show the right and bottom border
@@ -49,9 +79,7 @@ class MazeView2D:
         self.__screen_size = tuple(map(sum, zip(screen_size, (-1, -1))))
 
 
-        while np.array_equal(self.__entrance, self.__goal):
-            self.__goal = np.array((np.random.randint(self.maze_size[0]),
-                np.random.randint(self.maze_size[1])))
+
 
         # Create the Robot
         self.__robot = np.copy(self.entrance)
@@ -82,6 +110,12 @@ class MazeView2D:
         # this is where the state is initialized
         self.reset_robot()
 
+        # to render
+        # if maze_file_path:
+        #     self.update()
+        #     import time
+        #     time.sleep(20)
+
 
 
     def update(self, mode="human"):
@@ -108,8 +142,8 @@ class MazeView2D:
             raise ValueError("dir cannot be %s. The only valid dirs are %s."
                              % (str(dir), str(self.__maze.COMPASS.keys())))
 
-        # self.__state[self.__robot[0], self.__robot[1],0] = 0 # robotmap
-        self.__state[self.__robot[0], self.__robot[1]] = 0 # robotmap
+        self.__state[self.__robot[0], self.__robot[1],0] = 0 # robotmap
+        # self.__state[self.__robot[0], self.__robot[1]] = 0 # robotmap
 
 
         if self.__maze.is_open(self.__robot, dir):
@@ -125,9 +159,9 @@ class MazeView2D:
                 self.__robot = np.array(self.maze.get_portal(tuple(self.robot)).teleport(tuple(self.robot)))
             self.__draw_robot(transparency=255)
 
-        self.__state[self.__robot[0], self.__robot[1]] = 1# robotmap
+        # self.__state[self.__robot[0], self.__robot[1]] = 1# robotmap
 
-        # self.__state[self.__robot[0], self.__robot[1], 0] = 1 # robotmap
+        self.__state[self.__robot[0], self.__robot[1], 0] = 1 # robotmap
         # self.__state[self.__robot[0], self.__robot[1], 1] = 1 # visitedmap
 
     def reset_robot(self):
@@ -151,8 +185,7 @@ class MazeView2D:
                 x,y = location
                 portalmap[x,y,i] = 1
 
-        self.__state = robotmap #np.dstack((robotmap, visitedmap, mazemap, portalmap))
-
+        self.__state = np.dstack((robotmap, mazemap, portalmap)) #np.dstack((robotmap, visitedmap, mazemap, portalmap))
         self.__draw_robot(transparency=0)
         self.__robot = np.copy(self.entrance)
         self.__draw_robot(transparency=255)
@@ -324,7 +357,7 @@ class Maze:
         "W": (-1, 0)
     }
 
-    def __init__(self, maze_cells=None, maze_size=(10,10), has_loops=True, num_portals=0, entrance=(0,0), goal=(9,9)):
+    def __init__(self, maze_cells=None, maze_size=(10,10), has_loops=True, num_portals=0, entrance=(0,0), goal=(9,9), portal_locations=None):
 
         # maze member variables
         self.maze_cells = maze_cells
@@ -341,7 +374,7 @@ class Maze:
                 self.maze_size = tuple(maze_cells.shape)
             else:
                 raise ValueError("maze_cells must be a 2D NumPy array.")
-            self.__set_portals()
+            self.__set_portals(portal_locations=portal_locations)
         # Otherwise, generate a random one
         else:
             # maze's configuration parameters
@@ -360,7 +393,16 @@ class Maze:
             raise ValueError("Cannot find the directory for %s." % file_path)
 
         else:
-            np.save(file_path, self.maze_cells, allow_pickle=False, fix_imports=True)
+            entrancemap = np.zeros(self.maze_size)
+            entrancemap[self.entrance[0], self.entrance[1]] = 1
+            goalmap = np.zeros((self.maze_size))
+            goalmap[self.goal[0], self.goal[1]] = 1
+            portalmaps = np.zeros((self.maze_size[0], self.maze_size[1], self.num_portals))
+            for i, portal in enumerate(self.__portals):
+                for loc in portal.locations:
+                    portalmaps[loc[0], loc[1], i] = 1
+            to_save = np.dstack((self.maze_cells, entrancemap, goalmap, portalmaps)).astype('int64')
+            np.save(file_path, to_save)
 
     @classmethod
     def load_maze(cls, file_path):
@@ -427,16 +469,16 @@ class Maze:
         if self.num_portals > 0:
             self.__set_random_portals(num_portal_sets=self.num_portals)
 
-    def __set_portals(self):
-        cell_ids = [48, 63, 9, 61, 43, 35]
-
-        for portal_locations in [[(3, 4), (5, 3)], [(8, 4), (3, 6)], [(1, 6), (9, 0)]]:
-            portal = Portal(*portal_locations)
+    def __set_portals(self, portal_locations=None):
+        if not portal_locations:
+            portal_locations = [[(3, 4), (5, 3)], [(8, 4), (3, 6)], [(1, 6), (9, 0)]]
+        for portal_location_pair in portal_locations:
+            portal = Portal(*portal_location_pair)
             self.__portals.append(portal)
 
             # create a dictionary of portals
-            for portal_location in portal_locations:
-                self.__portals_dict[portal_location] = portal
+            for portal_location in portal_location_pair:
+                self.__portals_dict[tuple(portal_location.tolist())] = portal
 
     def __break_random_walls(self, percent):
         # find some random cells to break
@@ -586,6 +628,8 @@ class Portal:
         for location in locations:
             if isinstance(location, (tuple, list)):
                 self.__locations.append(tuple(location))
+            elif isinstance(location, np.ndarray):
+                self.__locations.append(tuple(location.tolist()))
             else:
                 raise ValueError("location must be a list or a tuple.")
 
