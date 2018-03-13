@@ -464,3 +464,363 @@ class SmallMaze98(MazeEnv):
 class SmallMaze99(MazeEnv):
     def __init__(self):
         super(SmallMaze99, self).__init__(maze_file='small_mazes/99.npy', mode='plus')
+class MediumMaze0(MazeEnv):
+    def __init__(self):
+        super(MediumMaze0, self).__init__(maze_file='medium_mazes/0.npy', mode='plus')
+class MediumMaze1(MazeEnv):
+    def __init__(self):
+        super(MediumMaze1, self).__init__(maze_file='medium_mazes/1.npy', mode='plus')
+class MediumMaze2(MazeEnv):
+    def __init__(self):
+        super(MediumMaze2, self).__init__(maze_file='medium_mazes/2.npy', mode='plus')
+class MediumMaze3(MazeEnv):
+    def __init__(self):
+        super(MediumMaze3, self).__init__(maze_file='medium_mazes/3.npy', mode='plus')
+class MediumMaze4(MazeEnv):
+    def __init__(self):
+        super(MediumMaze4, self).__init__(maze_file='medium_mazes/4.npy', mode='plus')
+class MediumMaze5(MazeEnv):
+    def __init__(self):
+        super(MediumMaze5, self).__init__(maze_file='medium_mazes/5.npy', mode='plus')
+class MediumMaze6(MazeEnv):
+    def __init__(self):
+        super(MediumMaze6, self).__init__(maze_file='medium_mazes/6.npy', mode='plus')
+class MediumMaze7(MazeEnv):
+    def __init__(self):
+        super(MediumMaze7, self).__init__(maze_file='medium_mazes/7.npy', mode='plus')
+class MediumMaze8(MazeEnv):
+    def __init__(self):
+        super(MediumMaze8, self).__init__(maze_file='medium_mazes/8.npy', mode='plus')
+class MediumMaze9(MazeEnv):
+    def __init__(self):
+        super(MediumMaze9, self).__init__(maze_file='medium_mazes/9.npy', mode='plus')
+class MediumMaze10(MazeEnv):
+    def __init__(self):
+        super(MediumMaze10, self).__init__(maze_file='medium_mazes/10.npy', mode='plus')
+class MediumMaze11(MazeEnv):
+    def __init__(self):
+        super(MediumMaze11, self).__init__(maze_file='medium_mazes/11.npy', mode='plus')
+class MediumMaze12(MazeEnv):
+    def __init__(self):
+        super(MediumMaze12, self).__init__(maze_file='medium_mazes/12.npy', mode='plus')
+class MediumMaze13(MazeEnv):
+    def __init__(self):
+        super(MediumMaze13, self).__init__(maze_file='medium_mazes/13.npy', mode='plus')
+class MediumMaze14(MazeEnv):
+    def __init__(self):
+        super(MediumMaze14, self).__init__(maze_file='medium_mazes/14.npy', mode='plus')
+class MediumMaze15(MazeEnv):
+    def __init__(self):
+        super(MediumMaze15, self).__init__(maze_file='medium_mazes/15.npy', mode='plus')
+class MediumMaze16(MazeEnv):
+    def __init__(self):
+        super(MediumMaze16, self).__init__(maze_file='medium_mazes/16.npy', mode='plus')
+class MediumMaze17(MazeEnv):
+    def __init__(self):
+        super(MediumMaze17, self).__init__(maze_file='medium_mazes/17.npy', mode='plus')
+class MediumMaze18(MazeEnv):
+    def __init__(self):
+        super(MediumMaze18, self).__init__(maze_file='medium_mazes/18.npy', mode='plus')
+class MediumMaze19(MazeEnv):
+    def __init__(self):
+        super(MediumMaze19, self).__init__(maze_file='medium_mazes/19.npy', mode='plus')
+class MediumMaze20(MazeEnv):
+    def __init__(self):
+        super(MediumMaze20, self).__init__(maze_file='medium_mazes/20.npy', mode='plus')
+class MediumMaze21(MazeEnv):
+    def __init__(self):
+        super(MediumMaze21, self).__init__(maze_file='medium_mazes/21.npy', mode='plus')
+class MediumMaze22(MazeEnv):
+    def __init__(self):
+        super(MediumMaze22, self).__init__(maze_file='medium_mazes/22.npy', mode='plus')
+class MediumMaze23(MazeEnv):
+    def __init__(self):
+        super(MediumMaze23, self).__init__(maze_file='medium_mazes/23.npy', mode='plus')
+class MediumMaze24(MazeEnv):
+    def __init__(self):
+        super(MediumMaze24, self).__init__(maze_file='medium_mazes/24.npy', mode='plus')
+class MediumMaze25(MazeEnv):
+    def __init__(self):
+        super(MediumMaze25, self).__init__(maze_file='medium_mazes/25.npy', mode='plus')
+class MediumMaze26(MazeEnv):
+    def __init__(self):
+        super(MediumMaze26, self).__init__(maze_file='medium_mazes/26.npy', mode='plus')
+class MediumMaze27(MazeEnv):
+    def __init__(self):
+        super(MediumMaze27, self).__init__(maze_file='medium_mazes/27.npy', mode='plus')
+class MediumMaze28(MazeEnv):
+    def __init__(self):
+        super(MediumMaze28, self).__init__(maze_file='medium_mazes/28.npy', mode='plus')
+class MediumMaze29(MazeEnv):
+    def __init__(self):
+        super(MediumMaze29, self).__init__(maze_file='medium_mazes/29.npy', mode='plus')
+class MediumMaze30(MazeEnv):
+    def __init__(self):
+        super(MediumMaze30, self).__init__(maze_file='medium_mazes/30.npy', mode='plus')
+class MediumMaze31(MazeEnv):
+    def __init__(self):
+        super(MediumMaze31, self).__init__(maze_file='medium_mazes/31.npy', mode='plus')
+class MediumMaze32(MazeEnv):
+    def __init__(self):
+        super(MediumMaze32, self).__init__(maze_file='medium_mazes/32.npy', mode='plus')
+class MediumMaze33(MazeEnv):
+    def __init__(self):
+        super(MediumMaze33, self).__init__(maze_file='medium_mazes/33.npy', mode='plus')
+class MediumMaze34(MazeEnv):
+    def __init__(self):
+        super(MediumMaze34, self).__init__(maze_file='medium_mazes/34.npy', mode='plus')
+class MediumMaze35(MazeEnv):
+    def __init__(self):
+        super(MediumMaze35, self).__init__(maze_file='medium_mazes/35.npy', mode='plus')
+class MediumMaze36(MazeEnv):
+    def __init__(self):
+        super(MediumMaze36, self).__init__(maze_file='medium_mazes/36.npy', mode='plus')
+class MediumMaze37(MazeEnv):
+    def __init__(self):
+        super(MediumMaze37, self).__init__(maze_file='medium_mazes/37.npy', mode='plus')
+class MediumMaze38(MazeEnv):
+    def __init__(self):
+        super(MediumMaze38, self).__init__(maze_file='medium_mazes/38.npy', mode='plus')
+class MediumMaze39(MazeEnv):
+    def __init__(self):
+        super(MediumMaze39, self).__init__(maze_file='medium_mazes/39.npy', mode='plus')
+class MediumMaze40(MazeEnv):
+    def __init__(self):
+        super(MediumMaze40, self).__init__(maze_file='medium_mazes/40.npy', mode='plus')
+class MediumMaze41(MazeEnv):
+    def __init__(self):
+        super(MediumMaze41, self).__init__(maze_file='medium_mazes/41.npy', mode='plus')
+class MediumMaze42(MazeEnv):
+    def __init__(self):
+        super(MediumMaze42, self).__init__(maze_file='medium_mazes/42.npy', mode='plus')
+class MediumMaze43(MazeEnv):
+    def __init__(self):
+        super(MediumMaze43, self).__init__(maze_file='medium_mazes/43.npy', mode='plus')
+class MediumMaze44(MazeEnv):
+    def __init__(self):
+        super(MediumMaze44, self).__init__(maze_file='medium_mazes/44.npy', mode='plus')
+class MediumMaze45(MazeEnv):
+    def __init__(self):
+        super(MediumMaze45, self).__init__(maze_file='medium_mazes/45.npy', mode='plus')
+class MediumMaze46(MazeEnv):
+    def __init__(self):
+        super(MediumMaze46, self).__init__(maze_file='medium_mazes/46.npy', mode='plus')
+class MediumMaze47(MazeEnv):
+    def __init__(self):
+        super(MediumMaze47, self).__init__(maze_file='medium_mazes/47.npy', mode='plus')
+class MediumMaze48(MazeEnv):
+    def __init__(self):
+        super(MediumMaze48, self).__init__(maze_file='medium_mazes/48.npy', mode='plus')
+class MediumMaze49(MazeEnv):
+    def __init__(self):
+        super(MediumMaze49, self).__init__(maze_file='medium_mazes/49.npy', mode='plus')
+class MediumMaze50(MazeEnv):
+    def __init__(self):
+        super(MediumMaze50, self).__init__(maze_file='medium_mazes/50.npy', mode='plus')
+class MediumMaze51(MazeEnv):
+    def __init__(self):
+        super(MediumMaze51, self).__init__(maze_file='medium_mazes/51.npy', mode='plus')
+class MediumMaze52(MazeEnv):
+    def __init__(self):
+        super(MediumMaze52, self).__init__(maze_file='medium_mazes/52.npy', mode='plus')
+class MediumMaze53(MazeEnv):
+    def __init__(self):
+        super(MediumMaze53, self).__init__(maze_file='medium_mazes/53.npy', mode='plus')
+class MediumMaze54(MazeEnv):
+    def __init__(self):
+        super(MediumMaze54, self).__init__(maze_file='medium_mazes/54.npy', mode='plus')
+class MediumMaze55(MazeEnv):
+    def __init__(self):
+        super(MediumMaze55, self).__init__(maze_file='medium_mazes/55.npy', mode='plus')
+class MediumMaze56(MazeEnv):
+    def __init__(self):
+        super(MediumMaze56, self).__init__(maze_file='medium_mazes/56.npy', mode='plus')
+class MediumMaze57(MazeEnv):
+    def __init__(self):
+        super(MediumMaze57, self).__init__(maze_file='medium_mazes/57.npy', mode='plus')
+class MediumMaze58(MazeEnv):
+    def __init__(self):
+        super(MediumMaze58, self).__init__(maze_file='medium_mazes/58.npy', mode='plus')
+class MediumMaze59(MazeEnv):
+    def __init__(self):
+        super(MediumMaze59, self).__init__(maze_file='medium_mazes/59.npy', mode='plus')
+class MediumMaze60(MazeEnv):
+    def __init__(self):
+        super(MediumMaze60, self).__init__(maze_file='medium_mazes/60.npy', mode='plus')
+class MediumMaze61(MazeEnv):
+    def __init__(self):
+        super(MediumMaze61, self).__init__(maze_file='medium_mazes/61.npy', mode='plus')
+class MediumMaze62(MazeEnv):
+    def __init__(self):
+        super(MediumMaze62, self).__init__(maze_file='medium_mazes/62.npy', mode='plus')
+class MediumMaze63(MazeEnv):
+    def __init__(self):
+        super(MediumMaze63, self).__init__(maze_file='medium_mazes/63.npy', mode='plus')
+class MediumMaze64(MazeEnv):
+    def __init__(self):
+        super(MediumMaze64, self).__init__(maze_file='medium_mazes/64.npy', mode='plus')
+class MediumMaze65(MazeEnv):
+    def __init__(self):
+        super(MediumMaze65, self).__init__(maze_file='medium_mazes/65.npy', mode='plus')
+class MediumMaze66(MazeEnv):
+    def __init__(self):
+        super(MediumMaze66, self).__init__(maze_file='medium_mazes/66.npy', mode='plus')
+class MediumMaze67(MazeEnv):
+    def __init__(self):
+        super(MediumMaze67, self).__init__(maze_file='medium_mazes/67.npy', mode='plus')
+class MediumMaze68(MazeEnv):
+    def __init__(self):
+        super(MediumMaze68, self).__init__(maze_file='medium_mazes/68.npy', mode='plus')
+class MediumMaze69(MazeEnv):
+    def __init__(self):
+        super(MediumMaze69, self).__init__(maze_file='medium_mazes/69.npy', mode='plus')
+class MediumMaze70(MazeEnv):
+    def __init__(self):
+        super(MediumMaze70, self).__init__(maze_file='medium_mazes/70.npy', mode='plus')
+class MediumMaze71(MazeEnv):
+    def __init__(self):
+        super(MediumMaze71, self).__init__(maze_file='medium_mazes/71.npy', mode='plus')
+class MediumMaze72(MazeEnv):
+    def __init__(self):
+        super(MediumMaze72, self).__init__(maze_file='medium_mazes/72.npy', mode='plus')
+class MediumMaze73(MazeEnv):
+    def __init__(self):
+        super(MediumMaze73, self).__init__(maze_file='medium_mazes/73.npy', mode='plus')
+class MediumMaze74(MazeEnv):
+    def __init__(self):
+        super(MediumMaze74, self).__init__(maze_file='medium_mazes/74.npy', mode='plus')
+class MediumMaze75(MazeEnv):
+    def __init__(self):
+        super(MediumMaze75, self).__init__(maze_file='medium_mazes/75.npy', mode='plus')
+class MediumMaze76(MazeEnv):
+    def __init__(self):
+        super(MediumMaze76, self).__init__(maze_file='medium_mazes/76.npy', mode='plus')
+class MediumMaze77(MazeEnv):
+    def __init__(self):
+        super(MediumMaze77, self).__init__(maze_file='medium_mazes/77.npy', mode='plus')
+class MediumMaze78(MazeEnv):
+    def __init__(self):
+        super(MediumMaze78, self).__init__(maze_file='medium_mazes/78.npy', mode='plus')
+class MediumMaze79(MazeEnv):
+    def __init__(self):
+        super(MediumMaze79, self).__init__(maze_file='medium_mazes/79.npy', mode='plus')
+class MediumMaze80(MazeEnv):
+    def __init__(self):
+        super(MediumMaze80, self).__init__(maze_file='medium_mazes/80.npy', mode='plus')
+class MediumMaze81(MazeEnv):
+    def __init__(self):
+        super(MediumMaze81, self).__init__(maze_file='medium_mazes/81.npy', mode='plus')
+class MediumMaze82(MazeEnv):
+    def __init__(self):
+        super(MediumMaze82, self).__init__(maze_file='medium_mazes/82.npy', mode='plus')
+class MediumMaze83(MazeEnv):
+    def __init__(self):
+        super(MediumMaze83, self).__init__(maze_file='medium_mazes/83.npy', mode='plus')
+class MediumMaze84(MazeEnv):
+    def __init__(self):
+        super(MediumMaze84, self).__init__(maze_file='medium_mazes/84.npy', mode='plus')
+class MediumMaze85(MazeEnv):
+    def __init__(self):
+        super(MediumMaze85, self).__init__(maze_file='medium_mazes/85.npy', mode='plus')
+class MediumMaze86(MazeEnv):
+    def __init__(self):
+        super(MediumMaze86, self).__init__(maze_file='medium_mazes/86.npy', mode='plus')
+class MediumMaze87(MazeEnv):
+    def __init__(self):
+        super(MediumMaze87, self).__init__(maze_file='medium_mazes/87.npy', mode='plus')
+class MediumMaze88(MazeEnv):
+    def __init__(self):
+        super(MediumMaze88, self).__init__(maze_file='medium_mazes/88.npy', mode='plus')
+class MediumMaze89(MazeEnv):
+    def __init__(self):
+        super(MediumMaze89, self).__init__(maze_file='medium_mazes/89.npy', mode='plus')
+class MediumMaze90(MazeEnv):
+    def __init__(self):
+        super(MediumMaze90, self).__init__(maze_file='medium_mazes/90.npy', mode='plus')
+class MediumMaze91(MazeEnv):
+    def __init__(self):
+        super(MediumMaze91, self).__init__(maze_file='medium_mazes/91.npy', mode='plus')
+class MediumMaze92(MazeEnv):
+    def __init__(self):
+        super(MediumMaze92, self).__init__(maze_file='medium_mazes/92.npy', mode='plus')
+class MediumMaze93(MazeEnv):
+    def __init__(self):
+        super(MediumMaze93, self).__init__(maze_file='medium_mazes/93.npy', mode='plus')
+class MediumMaze94(MazeEnv):
+    def __init__(self):
+        super(MediumMaze94, self).__init__(maze_file='medium_mazes/94.npy', mode='plus')
+class MediumMaze95(MazeEnv):
+    def __init__(self):
+        super(MediumMaze95, self).__init__(maze_file='medium_mazes/95.npy', mode='plus')
+class MediumMaze96(MazeEnv):
+    def __init__(self):
+        super(MediumMaze96, self).__init__(maze_file='medium_mazes/96.npy', mode='plus')
+class MediumMaze97(MazeEnv):
+    def __init__(self):
+        super(MediumMaze97, self).__init__(maze_file='medium_mazes/97.npy', mode='plus')
+class MediumMaze98(MazeEnv):
+    def __init__(self):
+        super(MediumMaze98, self).__init__(maze_file='medium_mazes/98.npy', mode='plus')
+class MediumMaze99(MazeEnv):
+    def __init__(self):
+        super(MediumMaze99, self).__init__(maze_file='medium_mazes/99.npy', mode='plus')
+class BigMaze0(MazeEnv):
+    def __init__(self):
+        super(BigMaze0, self).__init__(maze_file='big_mazes/0.npy', mode='plus')
+class BigMaze1(MazeEnv):
+    def __init__(self):
+        super(BigMaze1, self).__init__(maze_file='big_mazes/1.npy', mode='plus')
+class BigMaze2(MazeEnv):
+    def __init__(self):
+        super(BigMaze2, self).__init__(maze_file='big_mazes/2.npy', mode='plus')
+class BigMaze3(MazeEnv):
+    def __init__(self):
+        super(BigMaze3, self).__init__(maze_file='big_mazes/3.npy', mode='plus')
+class BigMaze4(MazeEnv):
+    def __init__(self):
+        super(BigMaze4, self).__init__(maze_file='big_mazes/4.npy', mode='plus')
+class BigMaze5(MazeEnv):
+    def __init__(self):
+        super(BigMaze5, self).__init__(maze_file='big_mazes/5.npy', mode='plus')
+class BigMaze6(MazeEnv):
+    def __init__(self):
+        super(BigMaze6, self).__init__(maze_file='big_mazes/6.npy', mode='plus')
+class BigMaze7(MazeEnv):
+    def __init__(self):
+        super(BigMaze7, self).__init__(maze_file='big_mazes/7.npy', mode='plus')
+class BigMaze8(MazeEnv):
+    def __init__(self):
+        super(BigMaze8, self).__init__(maze_file='big_mazes/8.npy', mode='plus')
+class BigMaze9(MazeEnv):
+    def __init__(self):
+        super(BigMaze9, self).__init__(maze_file='big_mazes/9.npy', mode='plus')
+class VeryBigMaze0(MazeEnv):
+    def __init__(self):
+        super(VeryBigMaze0, self).__init__(maze_file='very_big_mazes/0.npy', mode='plus')
+class VeryBigMaze1(MazeEnv):
+    def __init__(self):
+        super(VeryBigMaze1, self).__init__(maze_file='very_big_mazes/1.npy', mode='plus')
+class VeryBigMaze2(MazeEnv):
+    def __init__(self):
+        super(VeryBigMaze2, self).__init__(maze_file='very_big_mazes/2.npy', mode='plus')
+class VeryBigMaze3(MazeEnv):
+    def __init__(self):
+        super(VeryBigMaze3, self).__init__(maze_file='very_big_mazes/3.npy', mode='plus')
+class VeryBigMaze4(MazeEnv):
+    def __init__(self):
+        super(VeryBigMaze4, self).__init__(maze_file='very_big_mazes/4.npy', mode='plus')
+class VeryBigMaze5(MazeEnv):
+    def __init__(self):
+        super(VeryBigMaze5, self).__init__(maze_file='very_big_mazes/5.npy', mode='plus')
+class VeryBigMaze6(MazeEnv):
+    def __init__(self):
+        super(VeryBigMaze6, self).__init__(maze_file='very_big_mazes/6.npy', mode='plus')
+class VeryBigMaze7(MazeEnv):
+    def __init__(self):
+        super(VeryBigMaze7, self).__init__(maze_file='very_big_mazes/7.npy', mode='plus')
+class VeryBigMaze8(MazeEnv):
+    def __init__(self):
+        super(VeryBigMaze8, self).__init__(maze_file='very_big_mazes/8.npy', mode='plus')
+class VeryBigMaze9(MazeEnv):
+    def __init__(self):
+        super(VeryBigMaze9, self).__init__(maze_file='very_big_mazes/9.npy', mode='plus')

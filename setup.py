@@ -7,7 +7,7 @@ setup(name="gym_maze",
       license="MIT",
       packages=["gym_maze", "gym_maze.envs"],
       package_data = {
-          "gym_maze.envs": ["maze_samples/*.npy", "maze_samples/small_mazes/*.npy"]
+          "gym_maze.envs": ["maze_samples/*.npy", "maze_samples/small_mazes/*.npy", "maze_samples/medium_mazes/*.npy", "maze_samples/big_mazes/*.npy", "maze_samples/very_big_mazes/*.npy"]
       },
       install_requires = ["gym", "pygame", "numpy"]
 )

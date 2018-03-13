@@ -22,7 +22,7 @@ class MazeView2D:
                 np.random.randint(maze_size[1])))
             self.__goal = np.array((np.random.randint(maze_size[0]),
                 np.random.randint(maze_size[1])))
-            while np.array_equal(self.__entrance, self.__goal):
+            while MazeView2D.is_adjacent(self.__entrance, self.__goal):
                 self.__goal = np.array((np.random.randint(maze_size[0]),
                 np.random.randint(maze_size[1])))
 
@@ -116,7 +116,9 @@ class MazeView2D:
         #     import time
         #     time.sleep(20)
 
-
+    @staticmethod
+    def is_adjacent(cell1, cell2):
+        return np.abs(cell1[0] - cell2[0]) + np.abs(cell1[1] - cell2[1]) < 1.5
 
     def update(self, mode="human"):
         try:
@@ -266,28 +268,32 @@ class MazeView2D:
 
             pygame.draw.line(self.maze_layer, colour, line_head, line_tail, 2)
 
-    def __draw_robot(self, colour=(0, 0, 150), transparency=255):
+    def __draw_robot(self, colour=(0, 0, 0), transparency=255):
 
         x = int(self.__robot[0] * self.CELL_W + self.CELL_W * 0.5 + 0.5)
         y = int(self.__robot[1] * self.CELL_H + self.CELL_H * 0.5 + 0.5)
         r = int(min(self.CELL_W, self.CELL_H)/5 + 0.5)
 
+        colour = (255,167,0)
+
         pygame.draw.circle(self.maze_layer, colour + (transparency,), (x, y), r)
 
-    def __draw_entrance(self, colour=(0, 0, 150), transparency=235):
-
+    def __draw_entrance(self, colour=(0, 0, 150), transparency=245):
+        colour = (128, 128, 128)
+        
         self.__colour_cell(self.entrance, colour=colour, transparency=transparency)
 
-    def __draw_goal(self, colour=(150, 0, 0), transparency=235):
-
+    def __draw_goal(self, colour=(150, 0, 0), transparency=245):
+        colour = (128, 128, 128)
+        
         self.__colour_cell(self.goal, colour=colour, transparency=transparency)
 
-    def __draw_portals(self, transparency=160):
+    def __draw_portals(self, transparency=245):
 
-        colour_range = np.linspace(0, 255, len(self.maze.portals), dtype=int)
+        google_colors = [(0,87,231), (214,45,32), (0,135,68)]
         colour_i = 0
         for portal in self.maze.portals:
-            colour = ((100 - colour_range[colour_i])% 255, colour_range[colour_i], 0)
+            colour = google_colors[colour_i]
             colour_i += 1
             for location in portal.locations:
                 self.__colour_cell(location, colour=colour, transparency=transparency)
