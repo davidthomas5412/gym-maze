@@ -161,10 +161,16 @@ class MazeView2D:
                 self.__robot = np.array(self.maze.get_portal(tuple(self.robot)).teleport(tuple(self.robot)))
             self.__draw_robot(transparency=255)
 
+        else:
+            self.walk_into_wall += 1
+
         # self.__state[self.__robot[0], self.__robot[1]] = 1# robotmap
 
         self.__state[self.__robot[0], self.__robot[1], 0] = 1 # robotmap
         # self.__state[self.__robot[0], self.__robot[1], 1] = 1 # visitedmap
+
+    def save_img(self, file):
+        return pygame.image.save(self.screen, file)
 
     def reset_robot(self):
         # Added for DQN
@@ -191,6 +197,7 @@ class MazeView2D:
         self.__draw_robot(transparency=0)
         self.__robot = np.copy(self.entrance)
         self.__draw_robot(transparency=255)
+        self.walk_into_wall = 0
 
     def __controller_update(self):
         if not self.__game_over:
@@ -290,7 +297,7 @@ class MazeView2D:
 
     def __draw_portals(self, transparency=245):
 
-        google_colors = [(0,87,231), (214,45,32), (0,135,68)]
+        google_colors = [(52,152,219), (231,76,60), (46,204,113)]
         colour_i = 0
         for portal in self.maze.portals:
             colour = google_colors[colour_i]
